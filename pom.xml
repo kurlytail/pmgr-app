@@ -45,12 +45,12 @@
 			<artifactId>h2</artifactId>
 			<version>1.4.197</version>
 		</dependency>
-		<dependency>
+<!-- 		<dependency>
 			<groupId>com.bst.pmgr</groupId>
 			<artifactId>pmgr-user</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 			<type>jar</type>
-		</dependency>
+		</dependency> -->
 	</dependencies>
 
 	<properties>
