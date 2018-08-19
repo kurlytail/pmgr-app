@@ -4,10 +4,10 @@
         <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
-        <dependent-module archiveName="pmgr-user-authentication-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/pmgr-user-authentication/pmgr-user-authentication">
+        <dependent-module archiveName="pmgr-user-authentication-0.1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/pmgr-user-authentication/pmgr-user-authentication">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="pmgr-user-registration-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/pmgr-user-registration/pmgr-user-registration">
+        <dependent-module archiveName="pmgr-user-registration-0.1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/pmgr-user-registration/pmgr-user-registration">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <property name="context-root" value="pmgr-app"/>
