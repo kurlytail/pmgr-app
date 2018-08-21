@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="index.html :: head" />
+<body>
+	<main class="auth"> <header id="auth-header" class="auth-header"
+		style="background-image: url(assets/images/illustration/img-1.png);">
+		<h1>
+			<img src="assets/images/brand-inverse.png" alt="" height="72">
+			<span class="sr-only">Sign Up</span>
+		</h1>
+		<p>
+			Already have an account? please
+			<a href="auth-signin.html">Sign In</a>
+		</p>
+	</header>
+	<form class="auth-form" th:object="${user}" method="POST"
+		enctype="utf8" action="auth-signup-confirm">
+		<!-- .form-group -->
+		<div class="form-group">
+			<div class="form-label-group">
+				<label th:text="#{label.user.email}">email</label>
+				<input type="email" th:field="*{email}" class="form-control"
+					required="" autofocus="" />
+				<p th:each="error : ${#fields.errors('email')}" th:text="${error}">Validation
+					error</p>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<button class="btn btn-lg btn-primary btn-block" type="submit">Sign
+				Up</button>
+		</div>
+
+		<p class="text-center text-muted mb-0">
+			By creating an account you agree to the
+			<a href="#">Terms of Use</a>
+			and
+			<a href="#">Privacy Policy</a>
+			.
+		</p>
+	</form>
+	<div th:replace="index.html :: auth-footer" />
+	<script src="assets/vendor/particles.js/particles.min.js"></script> <script>
+		/* particlesJS.load(@dom-id, @path-json, @callback (optional)); */
+		particlesJS.load('auth-header', 'assets/javascript/particles.json');
+	</script>
+</body>
+</html>
