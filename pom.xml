@@ -17,11 +17,6 @@
 	<dependencies>
 		<dependency>
 			<groupId>com.bst</groupId>
-			<artifactId>user-authentication</artifactId>
-			<version>0.1.0</version>
-		</dependency>
-		<dependency>
-			<groupId>com.bst</groupId>
 			<artifactId>user-registration</artifactId>
 			<version>0.1.0</version>
 		</dependency>
