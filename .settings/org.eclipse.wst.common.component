@@ -11,6 +11,9 @@
         <dependent-module archiveName="utility-services-0.1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/utility-services/utility-services">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="user-authentication-0.1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/user-authentication/user-authentication">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <property name="context-root" value="pmgr-app"/>
         <property name="java-output-path" value="/pmgr-app/target/classes"/>
     </wb-module>
