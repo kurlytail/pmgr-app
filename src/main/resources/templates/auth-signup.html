@@ -13,14 +13,14 @@
 			<a href="auth-signin.html">Sign In</a>
 		</p>
 	</header>
-	<form class="auth-form" th:object="${user}" method="POST"
+	<form class="auth-form" th:object="${user}" method="POST" id="user-registration-form"
 		enctype="utf8" action="auth-signup-confirm">
 		<!-- .form-group -->
 		<div class="form-group">
 			<div class="form-label-group">
 				<label th:text="#{label.user.email}">email</label>
 				<input type="email" th:field="*{email}" class="form-control"
-					required="" autofocus="" />
+					required="" autofocus="" id="user-registration-email"/>
 				<p th:each="error : ${#fields.errors('email')}" th:text="${error}">Validation
 					error</p>
 			</div>
@@ -34,7 +34,6 @@
 			<p class="error-message"
 				th:each="error: ${#fields.errors('reCaptchaResponse')}"
 				th:text="${error}">Validation error</p>
-
 		</div>
 
 		<div class="form-group">
