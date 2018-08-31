@@ -3,7 +3,6 @@ package com.bst.pmgr.application;
 import static io.github.jsonSnapshot.SnapshotMatcher.expect;
 import static io.github.jsonSnapshot.SnapshotMatcher.start;
 import static io.github.jsonSnapshot.SnapshotMatcher.validateSnapshots;
-import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 
 import java.io.IOException;
 
@@ -18,6 +17,9 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.runner.RunWith;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
@@ -25,18 +27,22 @@ import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.web.servlet.htmlunit.MockMvcWebClientBuilder;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.gargoylesoftware.htmlunit.WebClient;
-import com.gargoylesoftware.htmlunit.html.DomElement;
-import com.gargoylesoftware.htmlunit.html.HtmlPage;
+import com.bst.pmgr.selenium.SeleniumTest;
 import com.icegreen.greenmail.junit.GreenMailRule;
 import com.icegreen.greenmail.util.ServerSetupTest;
 
 @RunWith(SpringJUnit4ClassRunner.class)
+@SeleniumTest(driver = ChromeDriver.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 public class ApplicationTest {
+
+	@Autowired
+	private WebDriver driver;
 
 	@Autowired
 	private JavaMailSender emailService;
@@ -50,13 +56,11 @@ public class ApplicationTest {
 	@Rule
 	public GreenMailRule smtpServerRule = new GreenMailRule(ServerSetupTest.ALL);
 
-	private WebClient webClient;
+	private MockMvc mockMvc;
 
 	@Before
 	public void setup() {
-		this.webClient = MockMvcWebClientBuilder.webAppContextSetup(context, springSecurity()).contextPath("").build();
-		webClient.getOptions().setCssEnabled(false);
-		//webClient.getOptions().setJavaScriptEnabled(false);
+		mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
 		this.smtpServerRule.start();
 	}
 
@@ -67,7 +71,6 @@ public class ApplicationTest {
 	@After
 	public void cleanup() {
 		this.smtpServerRule.stop();
-		this.webClient.close();
 	}
 
 	@BeforeClass
@@ -102,28 +105,29 @@ public class ApplicationTest {
 	}
 
 	@Test
-	@DisplayName("Should send a registration email on registration")
+	@DisplayName("Should send a registration email on registration and allow signing after registration confirmation")
 	public void registerAndSendEmail() throws Exception {
-		HtmlPage signupPage = webClient.getPage(url("/auth/signup"));
-		assert (signupPage).isHtmlPage();
+		
+		// Signup
+		driver.get(url("/auth/signup"));
+		driver.findElement(By.id("user-registration-email")).sendKeys("test@mail.com");
+		driver.switchTo().frame(0);
+		driver.findElement(
+				By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='reCAPTCHA'])[1]/preceding::div[4]"))
+				.click();
+		
+		Thread.sleep(5000);
+		
+		driver.switchTo().parentFrame();
+		driver.findElement(By.id("signup-button")).click();
 
-		DomElement element = signupPage.getElementById("user-registration-email");
-		signupPage.setFocusedElement(element);
-		element.setTextContent("test@mail.com");
-
-		element = signupPage.tabToNextElement();
-		element.click();
-
-		element = signupPage.tabToNextElement();
-		element.click();
-
-		webClient.waitForBackgroundJavaScript(15000);
-
+		// Check email
 		smtpServerRule.waitForIncomingEmail(5000, 1);
 		MimeMessage[] messages = smtpServerRule.getReceivedMessages();
 		assert (messages.length == 1);
+		
 		MimeMessage msg = messages[0];
-		expect(msg.getContent(), msg.getAllHeaders(), msg.getAllRecipients(), msg.getFrom(), signupPage.asText())
+		expect(msg.getAllHeaders(), msg.getAllRecipients(), msg.getFrom())
 				.toMatchSnapshot();
 	}
 
