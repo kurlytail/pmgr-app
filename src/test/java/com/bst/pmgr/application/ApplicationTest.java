@@ -10,7 +10,6 @@ import java.io.IOException;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
-import org.apache.commons.mail.util.MimeMessageParser;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -30,6 +29,7 @@ import org.springframework.test.web.servlet.htmlunit.MockMvcWebClientBuilder;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.gargoylesoftware.htmlunit.WebClient;
+import com.gargoylesoftware.htmlunit.html.DomElement;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.icegreen.greenmail.junit.GreenMailRule;
 import com.icegreen.greenmail.util.ServerSetupTest;
@@ -55,6 +55,8 @@ public class ApplicationTest {
 	@Before
 	public void setup() {
 		this.webClient = MockMvcWebClientBuilder.webAppContextSetup(context, springSecurity()).contextPath("").build();
+		webClient.getOptions().setCssEnabled(false);
+		//webClient.getOptions().setJavaScriptEnabled(false);
 		this.smtpServerRule.start();
 	}
 
@@ -92,23 +94,37 @@ public class ApplicationTest {
 
 		MimeMessage[] messages = smtpServerRule.getReceivedMessages();
 
+		assert (messages.length == 1);
+
 		for (MimeMessage msg : messages) {
 			expect(msg.getContent(), msg.getAllHeaders(), msg.getAllRecipients(), msg.getFrom()).toMatchSnapshot();
 		}
 	}
 
 	@Test
-	@DisplayName("Check index page returns without auth")
-	public void checkIndexWithNoAuth() throws Exception {
-		HtmlPage indexPage = webClient.getPage(url("/index"));
-		assert (indexPage).isHtmlPage();
-	}
-
-	@Test
-	@DisplayName("Check registration page can be accessed without auth")
-	public void checkRegistrationPage() throws Exception {
-		HtmlPage signupPage = webClient.getPage(url("/auth-signup"));
+	@DisplayName("Should send a registration email on registration")
+	public void registerAndSendEmail() throws Exception {
+		HtmlPage signupPage = webClient.getPage(url("/auth/signup"));
 		assert (signupPage).isHtmlPage();
+
+		DomElement element = signupPage.getElementById("user-registration-email");
+		signupPage.setFocusedElement(element);
+		element.setTextContent("test@mail.com");
+
+		element = signupPage.tabToNextElement();
+		element.click();
+
+		element = signupPage.tabToNextElement();
+		element.click();
+
+		webClient.waitForBackgroundJavaScript(15000);
+
+		smtpServerRule.waitForIncomingEmail(5000, 1);
+		MimeMessage[] messages = smtpServerRule.getReceivedMessages();
+		assert (messages.length == 1);
+		MimeMessage msg = messages[0];
+		expect(msg.getContent(), msg.getAllHeaders(), msg.getAllRecipients(), msg.getFrom(), signupPage.asText())
+				.toMatchSnapshot();
 	}
 
 }

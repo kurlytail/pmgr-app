@@ -5,14 +5,14 @@
 <body>
 	<!-- .auth -->
 	<main class="auth"> <header id="auth-header" class="auth-header"
-		style="background-image: url(assets/images/illustration/img-1.png);">
+		style="background-image: url(/assets/images/illustration/img-1.png);">
 		<h1>
-			<img src="assets/images/brand-inverse.png" alt="" height="72">
+			<img src="/assets/images/brand-inverse.png" alt="" height="72">
 			<span class="sr-only">Sign In</span>
 		</h1>
 		<p>
 			Don't have a account?
-			<a href="auth-signup.html">Create One</a>
+			<a href="/auth/signup">Create One</a>
 		</p>
 	</header> <!-- form -->
 	<form class="auth-form">
@@ -51,10 +51,10 @@
 		<!-- /.form-group -->
 		<!-- recovery links -->
 		<div class="text-center pt-3">
-			<a href="auth-recovery-username.html" class="link">Forgot
+			<a href="/auth/recovery-username" class="link">Forgot
 				Username?</a>
 			<span class="mx-2">·</span>
-			<a href="auth-recovery-password.html" class="link">Forgot
+			<a href="/auth/recovery-password" class="link">Forgot
 				Password?</a>
 		</div>
 		<!-- /recovery links -->
@@ -67,10 +67,10 @@
 	</footer> </main>
 	<!-- /.auth -->
 	<!-- BEGIN PLUGINS JS -->
-	<script src="assets/vendor/particles.js/particles.min.js"></script>
+	<script src="/assets/vendor/particles.js/particles.min.js"></script>
 	<script>
 		/* particlesJS.load(@dom-id, @path-json, @callback (optional)); */
-		particlesJS.load('auth-header', 'assets/javascript/particles.json');
+		particlesJS.load('auth-header', '/assets/javascript/particles.json');
 	</script>
 	<!-- END PLUGINS JS -->
 </body>

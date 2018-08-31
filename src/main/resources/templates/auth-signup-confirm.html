@@ -3,14 +3,14 @@
 <head th:replace="index.html :: head" />
 <body>
 	<main class="auth"> <header id="auth-header" class="auth-header"
-		style="background-image: url(assets/images/illustration/img-1.png);">
+		style="background-image: url(/assets/images/illustration/img-1.png);">
 		<h1>
-			<img src="assets/images/brand-inverse.png" alt="" height="72">
+			<img src="/assets/images/brand-inverse.png" alt="" height="72">
 			<span class="sr-only">Sign Up</span>
 		</h1>
 		<p>
 			Already have an account? please
-			<a href="auth-signin.html">Sign In</a>
+			<a href="/auth/signin">Sign In</a>
 		</p>
 	</header>
 	<section class="card card-fluid">
@@ -27,10 +27,10 @@
 	</section>
 	</main>
 	<div th:replace="index.html :: auth-footer" />
-	<script src="assets/vendor/particles.js/particles.min.js"></script>
+	<script src="/assets/vendor/particles.js/particles.min.js"></script>
 	<script>
 		/* particlesJS.load(@dom-id, @path-json, @callback (optional)); */
-		particlesJS.load('auth-header', 'assets/javascript/particles.json');
+		particlesJS.load('auth-header', '/assets/javascript/particles.json');
 	</script>
 </body>
 </html>
