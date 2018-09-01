@@ -5,6 +5,8 @@ import static io.github.jsonSnapshot.SnapshotMatcher.start;
 import static io.github.jsonSnapshot.SnapshotMatcher.validateSnapshots;
 
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -27,8 +29,6 @@ import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
@@ -56,11 +56,9 @@ public class ApplicationTest {
 	@Rule
 	public GreenMailRule smtpServerRule = new GreenMailRule(ServerSetupTest.ALL);
 
-	private MockMvc mockMvc;
-
 	@Before
 	public void setup() {
-		mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
+		MockMvcBuilders.webAppContextSetup(context).build();
 		this.smtpServerRule.start();
 	}
 
@@ -127,8 +125,20 @@ public class ApplicationTest {
 		assert (messages.length == 1);
 		
 		MimeMessage msg = messages[0];
+
+		String registrationMessage = msg.getContent().toString();
+
+	    Pattern p = Pattern.compile("(http://.*)");   // the pattern to search for
+	    Matcher m = p.matcher(registrationMessage);
+
+	    assert(m.find());
+	    
+	    String registrationLink = m.group(1);
+	    driver.get(registrationLink);
+	    
 		expect(msg.getAllHeaders(), msg.getAllRecipients(), msg.getFrom())
-				.toMatchSnapshot();
+			.toMatchSnapshot();
+
 	}
 
 }

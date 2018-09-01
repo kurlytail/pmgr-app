@@ -15,3 +15,23 @@ com.bst.pmgr.application.ApplicationTest.registerAndSendEmail=[
     }
   ]
 ]
+
+
+com.bst.pmgr.application.ApplicationTest.sendAndReceiveEmail=[
+  "Some text\r\n",
+  {
+    "e": {},
+    "match": false,
+    "want_line": false
+  },
+  [
+    {
+      "address": "test@mail.com"
+    }
+  ],
+  [
+    {
+      "address": "automator@brainspeedtech.com"
+    }
+  ]
+]
