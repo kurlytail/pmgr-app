@@ -5,10 +5,10 @@
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/.apt_generated"/>
-        <dependent-module archiveName="user-registration-0.1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/user-registration/user-registration">
+        <dependent-module archiveName="user-registration-0.0.3-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/user-registration/user-registration">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <property name="context-root" value="pmgr-app"/>
         <property name="java-output-path" value="/pmgr-app/target/classes"/>
+        <property name="context-root" value="pmgr-app"/>
     </wb-module>
 </project-modules>
