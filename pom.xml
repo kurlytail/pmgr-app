@@ -21,6 +21,12 @@
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.bst</groupId>
+            <artifactId>utility-lib</artifactId>
+            <version>0.0.3-SNAPSHOT</version>
         </dependency>
     </dependencies>
 

@@ -1,4 +1,4 @@
-package com.bst.pmgr.selenium;
+package com.bst.utility.test.lib;
 
 import static org.springframework.test.context.TestExecutionListeners.MergeMode.MERGE_WITH_DEFAULTS;
 

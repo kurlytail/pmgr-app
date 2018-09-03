@@ -1,4 +1,4 @@
-package com.bst.pmgr.mail;
+package com.bst.utility.test.lib;
 
 import javax.mail.internet.MimeMessage;
 

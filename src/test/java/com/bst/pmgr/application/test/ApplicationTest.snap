@@ -1,4 +1,4 @@
-com.bst.pmgr.application.ApplicationTest.registerAndSendEmail=[
+com.bst.pmgr.application.test.ApplicationTest.registerAndSendEmail=[
   {
     "e": {},
     "match": false,
@@ -17,7 +17,7 @@ com.bst.pmgr.application.ApplicationTest.registerAndSendEmail=[
 ]
 
 
-com.bst.pmgr.application.ApplicationTest.sendAndReceiveEmail=[
+com.bst.pmgr.application.test.ApplicationTest.sendAndReceiveEmail=[
   "Some text\r\n",
   {
     "e": {},

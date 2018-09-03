@@ -1,4 +1,4 @@
-package com.bst.pmgr.selenium;
+package com.bst.utility.test.lib;
 
 import org.openqa.selenium.WebDriver;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
