@@ -8,7 +8,6 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -57,7 +56,6 @@ public class VersionTest {
 	}
 
 	@Test
-	@DisplayName("Should provide the correct version in the test")
 	public void shouldReturnCorrectVersion() throws Exception {
 		driver.get(url("/auth/signup"));
 		expect(driver.findElement(By.id("applicationVersion")).getText()).toMatchSnapshot();

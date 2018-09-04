@@ -17,7 +17,6 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -82,7 +81,6 @@ public class ApplicationTest {
 	}
 
 	@Test
-	@DisplayName("Can send using email service and receive using greenmail")
 	public void sendAndReceiveEmail() throws IOException, MessagingException {
 		SimpleMailMessage message = new SimpleMailMessage();
 
@@ -103,7 +101,6 @@ public class ApplicationTest {
 	}
 
 	@Test
-	@DisplayName("Should send a registration email on registration and allow signing after registration confirmation")
 	public void registerAndSendEmail() throws Exception {
 		
 		// Signup
