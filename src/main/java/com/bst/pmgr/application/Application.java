@@ -12,7 +12,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @SpringBootApplication
-@ComponentScan("com.bst.configuration")
+@ComponentScan({ "com.bst.configuration", "com.bst.pmgr.configuration" })
 @EnableTransactionManagement
 public class Application extends SpringBootServletInitializer {
 

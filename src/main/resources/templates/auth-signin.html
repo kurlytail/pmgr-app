@@ -59,12 +59,9 @@
 		</div>
 		<!-- /recovery links -->
 	</form>
-	<!-- /.auth-form --> <!-- copyright --> <footer class="auth-footer">
-		© 2018 All Rights Reserved.
-		<a href="#">Privacy</a>
-		and
-		<a href="#">Terms</a>
-	</footer> </main>
+	<!-- /.auth-form -->
+	<div th:replace="index.html :: auth-footer" /
+	></main>
 	<!-- /.auth -->
 	<!-- BEGIN PLUGINS JS -->
 	<script src="@{/assets/vendor/particles.js/particles.min.js}"></script>
