@@ -43,7 +43,6 @@ pipeline {
                     
                 sh '/usr/local/bin/mvn --batch-mode release:update-versions -DautoVersionSubmodules=true -DdevelopmentVersion=$MAVEN_VERSION_NUMBER'
                 sh '/usr/local/bin/mvn package' 
-                sh "curl --upload-file pmgr-app/target/pmgr-app.war 'http://admin:password@localhost:9080/manager/text/deploy?path=/pmgr/pmgr-app&update=true'"
             }
             
             post {
