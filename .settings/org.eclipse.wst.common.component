@@ -11,6 +11,9 @@
         <dependent-module archiveName="utility-lib-0.0.3-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/utility-lib/utility-lib">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="pmgr-entities-0.0.3-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/pmgr-entities/pmgr-entities">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <property name="java-output-path" value="/pmgr-app/target/classes"/>
         <property name="context-root" value="pmgr-app"/>
     </wb-module>
