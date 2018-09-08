@@ -12,32 +12,34 @@
 		</h1>
 		<p>
 			Don't have a account?
-			<a href="/auth/signup">Create One</a>
+			<a th:href="@{/auth/signup}">Create One</a>
 		</p>
 	</header> <!-- form -->
-	<form class="auth-form">
+	<form class="auth-form" th:object="${user}" method="POST"
+        id="auth-signin-form" enctype="utf8"
+        th:action="@{/auth/signin}">
 		<!-- .form-group -->
 		<div class="form-group">
 			<div class="form-label-group">
-				<input type="text" id="inputUser" class="form-control"
-					placeholder="Username" required="" autofocus="">
-				<label for="inputUser">Username</label>
+				<input type="text" id="auth-signin-email" th:field="*{email}" class="form-control"
+					placeholder="Username" required autofocus>
+				<label for="auth-signin-email" th:text="#{label.user.email}">Username</label>
 			</div>
 		</div>
 		<!-- /.form-group -->
 		<!-- .form-group -->
 		<div class="form-group">
 			<div class="form-label-group">
-				<input type="password" id="inputPassword" class="form-control"
-					placeholder="Password" required="">
-				<label for="inputPassword">Password</label>
+				<input type="password" id="auth-signin-password" th:field="*{password}"
+					class="form-control" placeholder="Password" required>
+				<label for="auth-signin-password" th:text="#{label.user.password}">Password</label>
 			</div>
 		</div>
 		<!-- /.form-group -->
 		<!-- .form-group -->
 		<div class="form-group">
-			<button class="btn btn-lg btn-primary btn-block" type="submit">Sign
-				In</button>
+			<button class="btn btn-lg btn-primary btn-block" type="submit"
+				id="auth-signin-button">Sign In</button>
 		</div>
 		<!-- /.form-group -->
 		<!-- .form-group -->
@@ -51,17 +53,16 @@
 		<!-- /.form-group -->
 		<!-- recovery links -->
 		<div class="text-center pt-3">
-			<a href="/auth/recovery-username" class="link">Forgot
-				Username?</a>
+			<a href="/auth/recovery-username" class="link">Forgot Username?</a>
 			<span class="mx-2">·</span>
-			<a href="/auth/recovery-password" class="link">Forgot
-				Password?</a>
+			<a href="/auth/recovery-password" class="link">Forgot Password?</a>
 		</div>
 		<!-- /recovery links -->
 	</form>
 	<!-- /.auth-form -->
-	<div th:replace="index.html :: auth-footer" /
-	></main>
+	<div th:replace="index.html :: auth-footer"/
+	>
+	</main>
 	<!-- /.auth -->
 	<!-- BEGIN PLUGINS JS -->
 	<script src="@{/assets/vendor/particles.js/particles.min.js}"></script>

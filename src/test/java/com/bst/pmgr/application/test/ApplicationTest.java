@@ -5,12 +5,14 @@ import static io.github.jsonSnapshot.SnapshotMatcher.start;
 import static io.github.jsonSnapshot.SnapshotMatcher.validateSnapshots;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
+import org.apache.commons.text.StringEscapeUtils;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -21,6 +23,8 @@ import org.junit.runner.RunWith;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
@@ -102,7 +106,9 @@ public class ApplicationTest {
 
 	@Test
 	public void registerAndSendEmail() throws Exception {
-		
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		WebDriverWait wait = new WebDriverWait(driver, 5);
+
 		// Signup
 		driver.get(url("/auth/signup"));
 		driver.findElement(By.id("user-registration-email")).sendKeys("test@mail.com");
@@ -111,13 +117,12 @@ public class ApplicationTest {
 				By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='reCAPTCHA'])[1]/preceding::div[4]"))
 				.click();
 		
-		Thread.sleep(5000);
-		
 		driver.switchTo().parentFrame();
+		wait.until(ExpectedConditions.elementToBeClickable(By.id("signup-button")));
 		driver.findElement(By.id("signup-button")).click();
 
 		// Check email
-		smtpServerRule.waitForIncomingEmail(5000, 1);
+		smtpServerRule.waitForIncomingEmail(1000, 1);
 		MimeMessage[] messages = smtpServerRule.getReceivedMessages();
 		assert (messages.length == 1);
 		
@@ -125,17 +130,27 @@ public class ApplicationTest {
 
 		String registrationMessage = msg.getContent().toString();
 
-	    Pattern p = Pattern.compile("(http://.*)");   // the pattern to search for
+	    Pattern p = Pattern.compile("href=\"(http://.*)\"");   // the pattern to search for
 	    Matcher m = p.matcher(registrationMessage);
 
 	    assert(m.find());
 	    
-	    String registrationLink = m.group(1);
+	    String registrationLink = StringEscapeUtils.unescapeHtml4(m.group(1));
 	    driver.get(registrationLink);
+	    
+	    driver.findElement(By.id("auth-continue-password")).sendKeys("password");
+	    driver.findElement(By.id("auth-continue-confirm-password")).sendKeys("password");
+	    driver.findElement(By.id("auth-continue-name")).sendKeys("John Doe");
+	    driver.findElement(By.id("auth-complete-button")).click();
+	    
+	    //driver.findElement(By.id("auth-signin-email")).sendKeys("test@mail.com");
+	    driver.findElement(By.id("auth-signin-password")).sendKeys("password");
+	    driver.findElement(By.id("auth-signin-button")).click();
+	    
+	    driver.findElement(By.id("user-dashboard"));
 	    
 		expect(msg.getAllHeaders(), msg.getAllRecipients(), msg.getFrom())
 			.toMatchSnapshot();
-
 	}
 
 }
