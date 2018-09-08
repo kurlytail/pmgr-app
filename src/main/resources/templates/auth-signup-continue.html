@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="index.html :: head" />
+<body id="auth-signup-confirm">
+	<main class="auth"> <header id="auth-header" class="auth-header"
+		style="background-image: url(@{/assets/images/illustration/img-1.png});">
+		<h1>
+			<img th:src="@{/assets/images/brand-inverse.png}" alt="" height="72">
+			<span class="sr-only">Continue registration</span>
+		</h1>
+		<p>
+			Already have an account? please
+			<a th:href="@{/auth/signin}">Sign In</a>
+		</p>
+	</header>
+	<form class="auth-form" th:object="${user}" method="POST"
+		id="auth-continue-form" enctype="utf8"
+		th:action="@{/auth/signup-complete}">
+		<!-- .form-group -->
+		<input type="hidden" th:field="*{hash}" autofocus
+			id="auth-continue-hash" />
+		<div class="form-group">
+			<div class="form-label-group">
+				<label th:text="#{label.user.email}">email</label>
+				<input type="email" th:field="*{email}" class="form-control"
+					required autofocus id="auth-continue-email" readonly />
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="form-label-group">
+				<label th:text="#{label.user.name}">email</label>
+				<input type="text" th:field="*{name}" class="form-control" required
+					autofocus id="auth-continue-name"/>
+				<p th:each="error : ${#fields.errors('name')}" th:text="${error}">Validation
+					error</p>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="form-label-group">
+				<label th:text="#{label.user.password}">email</label>
+				<input type="password" th:field="*{password}" class="form-control"
+					required autofocus id="auth-continue-password"/>
+				<p th:each="error : ${#fields.errors('password')}"
+					th:text="${error}">Validation error</p>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="form-label-group">
+				<label th:text="#{label.user.confirmPassword}">email</label>
+				<input type="password" th:field="*{confirmPassword}"
+					class="form-control" required autofocus id="auth-continue-confirm-password"/>
+				<p th:each="error : ${#fields.errors('confirmPassword')}"
+					th:text="${error}">Validation error</p>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<button class="btn btn-lg btn-primary btn-block" type="submit"
+				id="auth-complete-button">Complete Registration</button>
+		</div>
+
+		<p class="text-center text-muted mb-0">
+			By creating an account you agree to the
+			<a href="#">Terms of Use</a>
+			and
+			<a href="#">Privacy Policy</a>
+			.
+		</p>
+
+	</form>
+	<div th:replace="index.html :: auth-footer" />
+	<script>
+		function refresh() {
+		}
+
+		function enableButton() {
+			document.getElementById('signup-button').disabled = false;
+		}
+	</script>
+</body>
+</html>

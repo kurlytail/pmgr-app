@@ -32,6 +32,11 @@
             <artifactId>pmgr-entities</artifactId>
             <version>0.0.3-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>com.bst</groupId>
+            <artifactId>user-authentication</artifactId>
+            <version>0.0.3-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
     <packaging>war</packaging>
