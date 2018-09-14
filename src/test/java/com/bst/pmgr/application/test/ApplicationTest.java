@@ -120,6 +120,9 @@ public class ApplicationTest {
 
 		MimeMessage msg = messages[0];
 
+		expect(msg.getAllRecipients()).toMatchSnapshot();
+		expect(msg.getFrom()).toMatchSnapshot();
+
 		String registrationMessage = msg.getContent().toString();
 
 		Pattern p = Pattern.compile("href=\"(http://.*)\""); // the pattern to search for
@@ -141,9 +144,6 @@ public class ApplicationTest {
 
 		driver.findElement(By.id("user-dashboard"));
 
-		expect(msg.getContent()).toMatchSnapshot();
-		expect(msg.getAllRecipients()).toMatchSnapshot();
-		expect(msg.getFrom()).toMatchSnapshot();
 	}
 
 }

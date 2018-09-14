@@ -1,23 +1,19 @@
 {
   "sendAndReceiveEmail" : [ "Some text\r\n", [ {
     "address" : "test@mail.com",
-    "personal" : null,
     "type" : "rfc822",
     "group" : false
   } ], [ {
     "address" : "automator@brainspeedtech.com",
-    "personal" : null,
     "type" : "rfc822",
     "group" : false
   } ] ],
-  "registerAndSendEmail" : [ "<!DOCTYPE html>\r\n<html lang=\"en\">\r\n<body>\r\n    <a href=\"http://localhost:55688/auth/signup-continue?email=test@mail.com&amp;hash=588d0187dd8cd84bf38277543f5db2fa12ccc1847644d61d0975d4d562b82ab7b24b782ea8922297e1f3417d86127d5db959a1a00d46f2b34ff17068306b7f14\">\r\n        Continue signup\r\n    </a>\r\n</body>\r\n</html>\r\n", [ {
+  "registerAndSendEmail" : [ [ {
     "address" : "test@mail.com",
-    "personal" : null,
     "type" : "rfc822",
     "group" : false
   } ], [ {
     "address" : "automator@brainspeedtech.com",
-    "personal" : null,
     "type" : "rfc822",
     "group" : false
   } ] ]
