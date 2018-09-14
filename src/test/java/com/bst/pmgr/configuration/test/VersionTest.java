@@ -1,12 +1,8 @@
 package com.bst.pmgr.configuration.test;
 
-import static io.github.jsonSnapshot.SnapshotMatcher.expect;
-import static io.github.jsonSnapshot.SnapshotMatcher.start;
-import static io.github.jsonSnapshot.SnapshotMatcher.validateSnapshots;
+import static com.bst.utility.testlib.SnapshotListener.expect;
 
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.By;
@@ -16,15 +12,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.test.context.TestExecutionListeners;
+import org.springframework.test.context.TestExecutionListeners.MergeMode;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.bst.pmgr.application.Application;
-import com.bst.utility.test.lib.SeleniumTest;
+import com.bst.utility.testlib.SeleniumTest;
+import com.bst.utility.testlib.SeleniumTestExecutionListener;
+import com.bst.utility.testlib.SnapshotListener;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SeleniumTest(driver = ChromeDriver.class)
+@TestExecutionListeners(listeners = { SeleniumTestExecutionListener.class,
+		SnapshotListener.class }, mergeMode = MergeMode.MERGE_WITH_DEFAULTS)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT, classes = Application.class)
 public class VersionTest {
 	@Autowired
@@ -43,16 +45,6 @@ public class VersionTest {
 
 	public String url(String path) {
 		return "http://localhost:" + port + path;
-	}
-
-	@BeforeClass
-	public static void startSnapshot() {
-		start();
-	}
-
-	@AfterClass
-	public static void stopSnapshot() {
-		validateSnapshots();
 	}
 
 	@Test

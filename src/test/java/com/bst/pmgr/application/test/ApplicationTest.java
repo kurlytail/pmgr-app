@@ -1,22 +1,16 @@
 package com.bst.pmgr.application.test;
 
-import static io.github.jsonSnapshot.SnapshotMatcher.expect;
-import static io.github.jsonSnapshot.SnapshotMatcher.start;
-import static io.github.jsonSnapshot.SnapshotMatcher.validateSnapshots;
+import static com.bst.utility.testlib.SnapshotListener.expect;
 
-import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
 import org.apache.commons.text.StringEscapeUtils;
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,17 +25,23 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.test.context.TestExecutionListeners;
+import org.springframework.test.context.TestExecutionListeners.MergeMode;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.bst.utility.test.lib.SeleniumTest;
+import com.bst.utility.testlib.SeleniumTest;
+import com.bst.utility.testlib.SeleniumTestExecutionListener;
+import com.bst.utility.testlib.SnapshotListener;
 import com.icegreen.greenmail.junit.GreenMailRule;
 import com.icegreen.greenmail.util.ServerSetupTest;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SeleniumTest(driver = ChromeDriver.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+@TestExecutionListeners(listeners = { SeleniumTestExecutionListener.class,
+		SnapshotListener.class }, mergeMode = MergeMode.MERGE_WITH_DEFAULTS)
 public class ApplicationTest {
 
 	@Autowired
@@ -74,18 +74,8 @@ public class ApplicationTest {
 		this.smtpServerRule.stop();
 	}
 
-	@BeforeClass
-	public static void startSnapshot() {
-		start();
-	}
-
-	@AfterClass
-	public static void stopSnapshot() {
-		validateSnapshots();
-	}
-
 	@Test
-	public void sendAndReceiveEmail() throws IOException, MessagingException {
+	public void sendAndReceiveEmail() throws Exception {
 		SimpleMailMessage message = new SimpleMailMessage();
 
 		message.setFrom("automator@brainspeedtech.com");
@@ -100,7 +90,9 @@ public class ApplicationTest {
 		assert (messages.length == 1);
 
 		for (MimeMessage msg : messages) {
-			expect(msg.getContent(), msg.getAllHeaders(), msg.getAllRecipients(), msg.getFrom()).toMatchSnapshot();
+			expect(msg.getContent()).toMatchSnapshot();
+			expect(msg.getAllRecipients()).toMatchSnapshot();
+			expect(msg.getFrom()).toMatchSnapshot();
 		}
 	}
 
@@ -116,7 +108,7 @@ public class ApplicationTest {
 		driver.findElement(
 				By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='reCAPTCHA'])[1]/preceding::div[4]"))
 				.click();
-		
+
 		driver.switchTo().parentFrame();
 		wait.until(ExpectedConditions.elementToBeClickable(By.id("signup-button")));
 		driver.findElement(By.id("signup-button")).click();
@@ -125,32 +117,33 @@ public class ApplicationTest {
 		smtpServerRule.waitForIncomingEmail(1000, 1);
 		MimeMessage[] messages = smtpServerRule.getReceivedMessages();
 		assert (messages.length == 1);
-		
+
 		MimeMessage msg = messages[0];
 
 		String registrationMessage = msg.getContent().toString();
 
-	    Pattern p = Pattern.compile("href=\"(http://.*)\"");   // the pattern to search for
-	    Matcher m = p.matcher(registrationMessage);
+		Pattern p = Pattern.compile("href=\"(http://.*)\""); // the pattern to search for
+		Matcher m = p.matcher(registrationMessage);
 
-	    assert(m.find());
-	    
-	    String registrationLink = StringEscapeUtils.unescapeHtml4(m.group(1));
-	    driver.get(registrationLink);
-	    
-	    driver.findElement(By.id("auth-continue-password")).sendKeys("password");
-	    driver.findElement(By.id("auth-continue-confirm-password")).sendKeys("password");
-	    driver.findElement(By.id("auth-continue-name")).sendKeys("John Doe");
-	    driver.findElement(By.id("auth-complete-button")).click();
-	    
-	    //driver.findElement(By.id("auth-signin-email")).sendKeys("test@mail.com");
-	    driver.findElement(By.id("auth-signin-password")).sendKeys("password");
-	    driver.findElement(By.id("auth-signin-button")).click();
-	    
-	    driver.findElement(By.id("user-dashboard"));
-	    
-		expect(msg.getAllHeaders(), msg.getAllRecipients(), msg.getFrom())
-			.toMatchSnapshot();
+		assert (m.find());
+
+		String registrationLink = StringEscapeUtils.unescapeHtml4(m.group(1));
+		driver.get(registrationLink);
+
+		driver.findElement(By.id("auth-continue-password")).sendKeys("password");
+		driver.findElement(By.id("auth-continue-confirm-password")).sendKeys("password");
+		driver.findElement(By.id("auth-continue-name")).sendKeys("John Doe");
+		driver.findElement(By.id("auth-complete-button")).click();
+
+		// driver.findElement(By.id("auth-signin-email")).sendKeys("test@mail.com");
+		driver.findElement(By.id("auth-signin-password")).sendKeys("password");
+		driver.findElement(By.id("auth-signin-button")).click();
+
+		driver.findElement(By.id("user-dashboard"));
+
+		expect(msg.getContent()).toMatchSnapshot();
+		expect(msg.getAllRecipients()).toMatchSnapshot();
+		expect(msg.getFrom()).toMatchSnapshot();
 	}
 
 }
