@@ -14,4 +14,5 @@ public class VersionAdvice {
     public String getApplicationVersion() {
         return applicationVersion;
     }
+    
 }
