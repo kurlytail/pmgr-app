@@ -1,3 +1,6 @@
 [submodule "jenkins"]
 	path = jenkins
 	url = https://github.com/kurlytail/jenkins-lib
+[submodule "pmgr-web"]
+	path = pmgr-web
+	url = https://github.com/kurlytail/pmgr-web
