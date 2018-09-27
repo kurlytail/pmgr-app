@@ -23,7 +23,7 @@
         <dependency>
             <groupId>com.bst</groupId>
             <artifactId>utility-lib</artifactId>
-            <version>0.0.3-SNAPSHOT</version>
+            <version>0.0.10-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.bst</groupId>
@@ -231,8 +231,28 @@
                 </executions>
             </plugin>
         </plugins>
-
     </build>
+
+    <distributionManagement>
+        <repository>
+            <id>absolute directory</id>
+            <url>file:///data/maven/repo</url>
+        </repository>
+    </distributionManagement>
+
+    <scm>
+        <url>https://www.github.com/kurlytail/pmgr-app</url>
+        <connection>scm:git:https://www.github.com/kurlytail/pmgr-app</connection>
+        <developerConnection>scm:git:https://www.github.com/kurlytail/pmgr-app</developerConnection>
+    </scm>
+
+    <repositories>
+        <repository>
+            <id>bst-repo</id>
+            <name>Brainspeed Technologies Maven Repository</name>
+            <url>http://maven.brainspeedtech.com</url>
+        </repository>
+    </repositories>
 
     <organization>
         <name>Brainspeed Technologies</name>

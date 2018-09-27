@@ -27,22 +27,12 @@ pipeline {
             }
             
             steps {
-            
                 sh 'rm -rf *'
-            
-                checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: 
-                    false, extensions: [[$class: 'SubmoduleOption', disableSubmodules: false, parentCredentials: 
-                    true, recursiveSubmodules: true, reference: '', trackingSubmodules: false]], submoduleCfg: [],
-                    userRemoteConfigs: [[credentialsId: '683a5d0e-5460-4bca-b26a-ebcca1d8abfd', 
-                    url: 'https://github.com/kurlytail/pmgr']]])
-                    
-                sh 'rm -rf pmgr-app/*'
-                dir ('pmgr-app') {        
-                    checkout scm
-                }
+     
+                checkout scm
                     
                 sh '/usr/local/bin/mvn --batch-mode release:update-versions -DautoVersionSubmodules=true -DdevelopmentVersion=$MAVEN_VERSION_NUMBER'
-                sh '/usr/local/bin/mvn package' 
+                sh '/usr/local/bin/mvn deploy' 
             }
             
             post {
