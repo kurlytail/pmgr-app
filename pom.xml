@@ -248,6 +248,11 @@
 
     <repositories>
         <repository>
+            <id>maven-repo</id>
+            <name>Apache Maven Repository</name>
+            <url>https://repo.maven.apache.org/maven2/</url>
+        </repository>
+        <repository>
             <id>bst-repo</id>
             <name>Brainspeed Technologies Maven Repository</name>
             <url>http://maven.brainspeedtech.com</url>
