@@ -23,7 +23,7 @@
         <dependency>
             <groupId>com.bst</groupId>
             <artifactId>utility-lib</artifactId>
-            <version>0.0.10-SNAPSHOT</version>
+            <version>0.0.15-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.bst</groupId>
@@ -33,7 +33,7 @@
         <dependency>
             <groupId>com.bst</groupId>
             <artifactId>user-authentication</artifactId>
-            <version>0.0.3-SNAPSHOT</version>
+            <version>0.0.6-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -230,13 +230,24 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+            </plugin>
         </plugins>
+        <extensions>
+            <extension>
+                <groupId>org.apache.maven.wagon</groupId>
+                <artifactId>wagon-ssh</artifactId>
+                <version>3.1.0</version>
+            </extension>
+        </extensions>
     </build>
 
     <distributionManagement>
         <repository>
-            <id>absolute directory</id>
-            <url>file:///data/maven/repo</url>
+            <id>maven-scp</id>
+            <url>scp://maven@maven.brainspeedtech.com/data/maven/repo</url>
         </repository>
     </distributionManagement>
 

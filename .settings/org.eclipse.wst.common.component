@@ -11,9 +11,6 @@
         <dependent-module archiveName="pmgr-entities-0.0.3-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/pmgr-entities/pmgr-entities">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="user-authentication-0.0.3-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/user-authentication/user-authentication">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
         <dependent-module archiveName="pmgr-organization-0.0.3-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/pmgr-organization/pmgr-organization">
             <dependency-type>uses</dependency-type>
         </dependent-module>
