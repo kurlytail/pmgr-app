@@ -264,9 +264,9 @@
             <url>https://repo.maven.apache.org/maven2/</url>
         </repository>
         <repository>
-            <id>bst-repo</id>
+            <id>maven-scp</id>
             <name>Brainspeed Technologies Maven Repository</name>
-            <url>http://maven.brainspeedtech.com</url>
+            <url>scp://maven@maven.brainspeedtech.com/data/maven/repo</url>
         </repository>
     </repositories>
 
