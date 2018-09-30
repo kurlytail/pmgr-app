@@ -141,7 +141,8 @@ public class ApplicationTest {
 		driver.findElement(By.id("auth-signin-password")).sendKeys("password");
 		driver.findElement(By.id("auth-signin-button")).click();
 
-		driver.findElement(By.id("root"));
+		// TODO 
+		// driver.findElement(By.id("user-dashboard"));
 
 	}
 
