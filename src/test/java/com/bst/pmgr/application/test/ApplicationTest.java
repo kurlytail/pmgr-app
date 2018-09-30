@@ -108,7 +108,6 @@ public class ApplicationTest {
 		driver.findElement(
 				By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='reCAPTCHA'])[1]/preceding::div[4]"))
 				.click();
-
 		driver.switchTo().parentFrame();
 		wait.until(ExpectedConditions.elementToBeClickable(By.id("signup-button")));
 		driver.findElement(By.id("signup-button")).click();
