@@ -7,7 +7,7 @@
     <artifactId>pmgr-app</artifactId>
     <name>Project Manager application</name>
     <groupId>com.bst</groupId>
-    <version>0.0.5-SNAPSHOT</version>
+    <version>0.0.6-SNAPSHOT</version>
 
     <dependencies>
         <dependency>
