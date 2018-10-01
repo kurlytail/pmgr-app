@@ -214,6 +214,11 @@
                     </execution>
                 </executions>
                 <configuration>
+                    <environmentVariables>
+                        <PATH>
+                            ${project.build.directory}/node:${env.PATH}
+                        </PATH>
+                    </environmentVariables>
                     <executable>${project.build.directory}/node/npm</executable>
                     <workingDirectory>${project.build.directory}/pmgr-web</workingDirectory>
                     <arguments>
