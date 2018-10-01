@@ -13,7 +13,7 @@
         <dependency>
             <groupId>com.bst</groupId>
             <artifactId>user-registration</artifactId>
-            <version>0.0.5-SNAPSHOT</version>
+            <version>[0.0.5-SNAPSHOT,)</version>
         </dependency>
         <dependency>
             <groupId>com.h2database</groupId>
@@ -23,17 +23,17 @@
         <dependency>
             <groupId>com.bst</groupId>
             <artifactId>utility-lib</artifactId>
-            <version>0.0.15-SNAPSHOT</version>
+            <version>[0.0.18-SNAPSHOT,)</version>
         </dependency>
         <dependency>
             <groupId>com.bst</groupId>
             <artifactId>pmgr-entities</artifactId>
-            <version>0.0.3-SNAPSHOT</version>
+            <version>[0.0.3-SNAPSHOT,)</version>
         </dependency>
         <dependency>
             <groupId>com.bst</groupId>
             <artifactId>user-authentication</artifactId>
-            <version>0.0.8-SNAPSHOT</version>
+            <version>[0.0.8-SNAPSHOT,)</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -47,12 +47,12 @@
         <dependency>
             <groupId>com.bst</groupId>
             <artifactId>pmgr-organization</artifactId>
-            <version>0.0.3-SNAPSHOT</version>
+            <version>[0.0.3-SNAPSHOT,)</version>
         </dependency>
         <dependency>
             <groupId>com.bst</groupId>
             <artifactId>pmgr-generic</artifactId>
-            <version>0.0.3-SNAPSHOT</version>
+            <version>[0.0.3-SNAPSHOT,)</version>
         </dependency>
         <!-- <dependency> -->
         <!-- <groupId>com.microsoft.sqlserver</groupId> -->
@@ -289,9 +289,9 @@
             <url>https://repo.maven.apache.org/maven2/</url>
         </repository>
         <repository>
-            <id>maven-scp</id>
+            <id>bst-repo</id>
             <name>Brainspeed Technologies Maven Repository</name>
-            <url>scp://maven@maven.brainspeedtech.com/data/maven/repo</url>
+            <url>http://maven.brainspeedtech.com/</url>
         </repository>
     </repositories>
 
