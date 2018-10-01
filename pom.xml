@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>pmgr-app</artifactId>
@@ -274,6 +276,16 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-release-plugin</artifactId>
             </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>tomcat-maven-plugin</artifactId>
+                <version>1.1</version>
+                <configuration>
+                    <url>http://localhost:9080/manager/text</url>
+                    <server>TomcatServer</server>
+                    <path>/pmgr-app</path>
+                </configuration>
+            </plugin>
         </plugins>
         <extensions>
             <extension>
@@ -295,8 +307,8 @@
         <url>https://www.github.com/kurlytail/pmgr-app</url>
         <connection>scm:git:https://www.github.com/kurlytail/pmgr-app</connection>
         <developerConnection>scm:git:https://www.github.com/kurlytail/pmgr-app</developerConnection>
-      <tag>HEAD</tag>
-  </scm>
+        <tag>HEAD</tag>
+    </scm>
 
     <repositories>
         <repository>
@@ -305,9 +317,9 @@
             <url>https://repo.maven.apache.org/maven2/</url>
         </repository>
         <repository>
-            <id>bst-repo</id>
-            <name>Brainspeed Technologies Maven Repository</name>
-            <url>http://maven.brainspeedtech.com/</url>
+            <id>bst-scp</id>
+            <name>Brainspeed Technologies Maven Repository - scp</name>
+            <url>scp://maven.brainspeedtech.com/data/repo/maven</url>
         </repository>
     </repositories>
 
