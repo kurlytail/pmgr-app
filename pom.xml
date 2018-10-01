@@ -214,7 +214,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <executable>npm</executable>
+                    <executable>${project.build.directory}/node/npm</executable>
                     <workingDirectory>${project.build.directory}/pmgr-web</workingDirectory>
                     <arguments>
                         <argument>install</argument>
@@ -249,16 +249,18 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-deploy-plugin</artifactId>
             </plugin>
-            <!-- <plugin> -->
-            <!-- <groupId>com.google.appengine</groupId> -->
-            <!-- <artifactId>appengine-maven-plugin</artifactId> -->
-            <!-- <version>1.9.65</version> -->
-            <!-- <configuration> -->
-            <!-- <enableJarClasses>false</enableJarClasses> -->
-            <!-- <port>9000</port> -->
-            <!-- <address>0.0.0.0</address> -->
-            <!-- </configuration> -->
-            <!-- </plugin> -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
         <extensions>
             <extension>
