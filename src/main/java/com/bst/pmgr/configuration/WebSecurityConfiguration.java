@@ -1,6 +1,7 @@
 package com.bst.pmgr.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -24,7 +25,10 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-
+	
+	@Value("${pmgr.app.configuration.security:enabled}")
+	private String securityState;
+	
 	public WebSecurityConfiguration() {
 		super(false);
 	}
@@ -57,15 +61,20 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 		ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry matchers = http
 				.antMatcher("/**").authorizeRequests();
-		matchers = matchers.antMatchers("/assets/**").permitAll();
-		matchers = matchers.antMatchers("/auth/**").permitAll();
-		matchers = matchers.antMatchers("/*").permitAll();
-		matchers = matchers.anyRequest().authenticated();
+		if (this.securityState.equals("enabled")) {
+			matchers = matchers.antMatchers("/assets/**").permitAll();
+			matchers = matchers.antMatchers("/auth/**").permitAll();
+			matchers = matchers.antMatchers("/*").permitAll();
+			matchers = matchers.anyRequest().authenticated();
 
-		http = matchers.and();
-		http = http.logout().logoutSuccessUrl("/index").logoutUrl("/auth/signout").and();
-		http = http.formLogin().failureUrl("/auth/signin?error").loginPage("/auth/signin")
-				.loginProcessingUrl("/auth/signin").usernameParameter("email").passwordParameter("password").and();
+			http = matchers.and();
+			http = http.logout().logoutSuccessUrl("/index").logoutUrl("/auth/signout").and();
+			http = http.formLogin().failureUrl("/auth/signin?error").loginPage("/auth/signin")
+					.loginProcessingUrl("/auth/signin").usernameParameter("email").passwordParameter("password").and();
+		} else {
+			matchers = matchers.antMatchers("/**/*").permitAll();
+		}
+
 		http.csrf().disable();
 	}
 }

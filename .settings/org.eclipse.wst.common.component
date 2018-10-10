@@ -5,6 +5,24 @@
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/.apt_generated"/>
+        <dependent-module archiveName="user-registration-0.0.9-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/user-registration/user-registration">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="utility-lib-0.0.25-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/utility-lib/utility-lib">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="pmgr-entities-0.0.18-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/pmgr-entities/pmgr-entities">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="user-authentication-0.0.19-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/user-authentication/user-authentication">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="pmgr-organization-0.0.6-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/pmgr-organization/pmgr-organization">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="pmgr-generic-0.0.6-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/pmgr-generic/pmgr-generic">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <property name="java-output-path" value="/pmgr-app/target/classes"/>
         <property name="context-root" value="pmgr-app"/>
     </wb-module>
