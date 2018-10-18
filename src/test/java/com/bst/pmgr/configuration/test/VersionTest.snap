@@ -1,3 +1,4 @@
 {
-  "shouldReturnCorrectVersion" : [ "Dummy version" ]
+  "shouldReturnCorrectVersion" : [ "Dummy version" ],
+  "testShouldReturnCorrectVersion" : [ "Dummy version" ]
 }

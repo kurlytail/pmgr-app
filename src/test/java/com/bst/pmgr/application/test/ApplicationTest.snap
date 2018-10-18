@@ -16,5 +16,23 @@
     "address" : "automator@brainspeedtech.com",
     "type" : "rfc822",
     "group" : false
+  } ] ],
+  "testSendAndReceiveEmail" : [ "Some text\r\n", [ {
+    "address" : "test@mail.com",
+    "type" : "rfc822",
+    "group" : false
+  } ], [ {
+    "address" : "automator@brainspeedtech.com",
+    "type" : "rfc822",
+    "group" : false
+  } ] ],
+  "testRegisterAndSendEmail" : [ [ {
+    "address" : "test@mail.com",
+    "type" : "rfc822",
+    "group" : false
+  } ], [ {
+    "address" : "automator@brainspeedtech.com",
+    "type" : "rfc822",
+    "group" : false
   } ] ]
 }
