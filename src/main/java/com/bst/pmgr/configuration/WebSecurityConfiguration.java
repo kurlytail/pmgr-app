@@ -21,39 +21,29 @@ import com.bst.user.authentication.components.UserService;
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Autowired
-	private UserService userService;
-
-	@Autowired
 	private PasswordEncoder passwordEncoder;
-	
+
 	@Value("${pmgr.app.configuration.security:enabled}")
 	private String securityState;
-	
+
+	@Autowired
+	private UserService userService;
+
 	public WebSecurityConfiguration() {
 		super(false);
 	}
 
 	@Bean
 	public DaoAuthenticationProvider authProvider() {
-		DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-		authProvider.setUserDetailsService(userService);
-		authProvider.setPasswordEncoder(passwordEncoder);
+		final DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+		authProvider.setUserDetailsService(this.userService);
+		authProvider.setPasswordEncoder(this.passwordEncoder);
 		return authProvider;
 	}
 
-	@Bean
-	public AuthenticationManager customAuthenticationManager() throws Exception {
-		return authenticationManager();
-	}
-
 	@Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.authenticationProvider(authProvider());
-	}
-
-	@Override
-	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/resources/**");
+	protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
+		auth.authenticationProvider(this.authProvider());
 	}
 
 	@Override
@@ -76,5 +66,15 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 		}
 
 		http.csrf().disable();
+	}
+
+	@Override
+	public void configure(final WebSecurity web) throws Exception {
+		web.ignoring().antMatchers("/resources/**");
+	}
+
+	@Bean
+	public AuthenticationManager customAuthenticationManager() throws Exception {
+		return this.authenticationManager();
 	}
 }

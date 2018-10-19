@@ -42,6 +42,9 @@ import com.icegreen.greenmail.util.ServerSetupTest;
 public class ApplicationTest {
 
 	@Autowired
+	private WebApplicationContext context;
+
+	@Autowired
 	private WebDriver driver;
 
 	@Autowired
@@ -50,9 +53,6 @@ public class ApplicationTest {
 	@LocalServerPort
 	private int port;
 
-	@Autowired
-	private WebApplicationContext context;
-
 	public GreenMail smtpServer;
 
 	@AfterEach
@@ -60,10 +60,17 @@ public class ApplicationTest {
 		this.smtpServer.stop();
 	}
 
+	@BeforeEach
+	public void setup() {
+		this.smtpServer = new GreenMail(ServerSetupTest.ALL);
+		this.smtpServer.start();
+		MockMvcBuilders.webAppContextSetup(this.context).build();
+	}
+
 	@Test
 	public void testRegisterAndSendEmail() throws Exception {
 		this.driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		final WebDriverWait wait = new WebDriverWait(this.driver, 5);
+		final WebDriverWait wait = new WebDriverWait(this.driver, 10);
 
 		// Signup
 		this.driver.get(this.url("/auth/signup"));
@@ -73,9 +80,9 @@ public class ApplicationTest {
 				.findElement(By.xpath(
 						"(.//*[normalize-space(text()) and normalize-space(.)='reCAPTCHA'])[1]/preceding::div[4]"))
 				.click();
+		wait.withTimeout(5, TimeUnit.SECONDS);
 		this.driver.switchTo().parentFrame();
-		wait.until(ExpectedConditions.elementToBeClickable(By.id("signup-button")));
-		this.driver.findElement(By.id("signup-button")).click();
+		wait.until(ExpectedConditions.elementToBeClickable(By.id("signup-button"))).click();
 
 		// Check email
 		this.smtpServer.waitForIncomingEmail(1000, 1);
@@ -131,13 +138,6 @@ public class ApplicationTest {
 			SnapshotListener.expect(msg.getAllRecipients()).toMatchSnapshot();
 			SnapshotListener.expect(msg.getFrom()).toMatchSnapshot();
 		}
-	}
-
-	@BeforeEach
-	public void setup() {
-		this.smtpServer = new GreenMail(ServerSetupTest.ALL);
-		this.smtpServer.start();
-		MockMvcBuilders.webAppContextSetup(this.context).build();
 	}
 
 	public String url(final String path) {

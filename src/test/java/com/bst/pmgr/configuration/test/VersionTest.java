@@ -28,13 +28,13 @@ import com.bst.utility.testlib.SnapshotListener;
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT, classes = Application.class)
 public class VersionTest {
 	@Autowired
+	private WebApplicationContext context;
+
+	@Autowired
 	private WebDriver driver;
 
 	@LocalServerPort
 	private int port;
-
-	@Autowired
-	private WebApplicationContext context;
 
 	@BeforeEach
 	public void setup() {
