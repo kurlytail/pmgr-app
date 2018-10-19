@@ -5,7 +5,7 @@
     <artifactId>pmgr-app</artifactId>
     <name>Project Manager application</name>
     <groupId>com.bst</groupId>
-    <version>0.0.10</version>
+    <version>0.0.11-SNAPSHOT</version>
 
     <dependencies>
         <dependency>
@@ -352,7 +352,7 @@
         <url>https://www.github.com/kurlytail/pmgr-app</url>
         <connection>scm:git:https://www.github.com/kurlytail/pmgr-app</connection>
         <developerConnection>scm:git:https://www.github.com/kurlytail/pmgr-app</developerConnection>
-        <tag>pmgr-app-0.0.10</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <repositories>
