@@ -54,13 +54,11 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 		if (this.securityState.equals("enabled")) {
 			matchers = matchers.antMatchers("/assets/**").permitAll();
 			matchers = matchers.antMatchers("/auth/**").permitAll();
+			matchers = matchers.antMatchers("/api/registration").permitAll();
+			matchers = matchers.antMatchers("/api/session").permitAll();
 			matchers = matchers.antMatchers("/*").permitAll();
 			matchers = matchers.anyRequest().authenticated();
-
 			http = matchers.and();
-			http = http.logout().logoutSuccessUrl("/index").logoutUrl("/auth/signout").and();
-			http = http.formLogin().failureUrl("/auth/signin?error").loginPage("/auth/signin")
-					.loginProcessingUrl("/auth/signin").usernameParameter("email").passwordParameter("password").and();
 		} else {
 			matchers = matchers.antMatchers("/**/*").permitAll();
 		}
