@@ -4,18 +4,13 @@
                       http://maven.apache.org/xsd/settings-1.0.0.xsd">
     <servers>
         <server>
-            <id>bst-scp</id>
+            <id>maven-scp</id>
             <username>maven</username>
             <privateKey>maven.pem</privateKey>
             <configuration>
                 <strictHostKeyChecking>no</strictHostKeyChecking>
                 <interactive>false</interactive>
             </configuration>
-        </server>
-        <server>
-            <id>TomcatServer</id>
-            <username>admin</username>
-            <password>password</password>
         </server>
     </servers>
 </settings>
