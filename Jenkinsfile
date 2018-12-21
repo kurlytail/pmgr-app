@@ -34,9 +34,9 @@ pipeline {
                 checkout scm
                 
                 withMaven {
-                    sh '/usr/local/bin/mvn --batch-mode release:update-versions -DautoVersionSubmodules=true -DdevelopmentVersion=$MAVEN_VERSION_NUMBER'
-                    sh '/usr/local/bin/mvn -s settings.xml package --update-snapshots' 
-                    sh '/usr/local/bin/mvn clean heroku:deploy-war -Dheroku.appName=bst-pmgr-app'
+		            sh 'mvn --batch-mode -s settings.xml release:update-versions -DautoVersionSubmodules=true -DdevelopmentVersion=$MAVEN_VERSION_NUMBER'
+		            sh 'mvn --batch-mode -s settings.xml deploy'
+		            sh 'mvn --batch-mode -s settings.xml dockerfile:build'
                 }
                 
                 sh "docker stop pmgr || true"
